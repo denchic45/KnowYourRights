@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.denchic45.knowyourrights.ui.quizzes.QuizzesFragment"
+        android:label="@string/title_quizzes"
+        tools:layout="@layout/fragment_quizzes" >
+        <action
+            android:id="@+id/action_navigation_home_to_quizDetailsFragment"
+            app:destination="@id/quizDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_quiz_results"
+        android:name="com.denchic45.knowyourrights.ui.resultts.QuizResultsFragment"
+        android:label="@string/title_results"
+        tools:layout="@layout/fragment_quiz_results" >
+        <action
+            android:id="@+id/action_navigation_quiz_results_to_quizResultFragment"
+            app:destination="@id/quizResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.denchic45.knowyourrights.ui.notifications.NotificationsFragment"
+        android:label="@string/title_more"
+        tools:layout="@layout/fragment_notifications" />
+    <dialog
+        android:id="@+id/quizDetailsFragment"
+        android:name="com.denchic45.knowyourrights.ui.quizDetails.QuizDetailsFragment"
+        android:label="fragment_quiz_details"
+        tools:layout="@layout/fragment_quiz_details" >
+        <argument
+            android:name="quizId"
+            app:argType="string" />
+    </dialog>
+    <fragment
+        android:id="@+id/quizResultFragment"
+        android:name="com.denchic45.knowyourrights.ui.result.QuizResultFragment"
+        tools:layout="@layout/fragment_quiz_result" >
+        <argument
+            android:name="quizResultId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
