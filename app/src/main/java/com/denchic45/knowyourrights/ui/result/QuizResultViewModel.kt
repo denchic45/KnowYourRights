@@ -19,7 +19,8 @@ class QuizResultViewModel @Inject constructor(
     val result = flow { emit(findQuizResultUseCase(quizResultId)) }
         .shareIn(
             viewModelScope,
-            SharingStarted.Lazily
+            SharingStarted.Lazily,
+            replay = 1
         )
 
     init {
