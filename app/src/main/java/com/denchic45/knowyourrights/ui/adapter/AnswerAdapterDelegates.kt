@@ -2,10 +2,12 @@ package com.denchic45.knowyourrights.ui.adapter
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.ViewGroup
 import com.denchic45.knowyourrights.databinding.ItemAnswerBinding
 import com.denchic45.knowyourrights.domain.model.PassedQuestion
 import com.denchic45.knowyourrights.domain.model.Question
+import com.denchic45.knowyourrights.ui.model.EnterChoiceItem
 import com.denchic45.knowyourrights.ui.model.MultiChoiceItem
 import com.denchic45.knowyourrights.ui.model.SingleChoiceItem
 import com.denchic45.knowyourrights.utils.viewBinding
@@ -22,7 +24,11 @@ class AnswerAdapterDelegate :
             with(binding) {
                 tvQuestionName.text = item.question.title
                 val adapter: DelegationAdapterExtended = adapter {
-                    delegates(SingleChoiceAdapterDelegate(), MultiChoiceAdapterDelegate())
+                    delegates(
+                        SingleChoiceAdapterDelegate(),
+                        MultiChoiceAdapterDelegate(),
+                        EnterAnswerAdapterDelegate()
+                    )
                 }
                 rvAnswers.adapter = adapter
 
@@ -78,7 +84,26 @@ class AnswerAdapterDelegate :
                             }
                         }
                     }
-                    is Question.Answer.EnterAnswer -> {}
+                    is Question.Answer.EnterAnswer -> {
+                        adapter.submit(
+                            listOf(
+                                EnterChoiceItem(
+                                    enteredAnswer = item.answer.value
+                                )
+                            )
+                        )
+
+                        Handler(Looper.getMainLooper()).post {
+                            adapter.notifyItemChanged(
+                                0,
+                                if ((item.question.choice.correctAnswer as Question.Answer.EnterAnswer).value != item.answer.value) {
+                                    EnterAnswerAdapterDelegate.Companion.Payload.False((item.question.choice.correctAnswer as Question.Answer.EnterAnswer).value)
+                                } else {
+                                    EnterAnswerAdapterDelegate.Companion.Payload.True
+                                }
+                            )
+                        }
+                    }
                 }
 
 

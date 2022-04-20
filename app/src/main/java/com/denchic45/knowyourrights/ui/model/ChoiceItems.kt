@@ -12,4 +12,4 @@ data class MultiChoiceItem(
     override val id: String = ""
 ) : UiModel
 
-data class EnterChoiceItem(override val id: String = "") : UiModel
+data class EnterChoiceItem(override val id: String = "", val enteredAnswer: String) : UiModel

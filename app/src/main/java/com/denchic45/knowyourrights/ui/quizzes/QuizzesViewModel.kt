@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-class QuizzesViewModel @Inject constructor(findQuizzesUseCase: FindQuizzesUseCase) :
-    BaseViewModel() {
+class QuizzesViewModel @Inject constructor(
+    findQuizzesUseCase: FindQuizzesUseCase
+) : BaseViewModel() {
 
     fun onQuizItemClick(pos: Int) {
         navigateTo(

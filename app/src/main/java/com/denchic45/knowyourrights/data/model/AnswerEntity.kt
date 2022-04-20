@@ -26,5 +26,6 @@ class AnswerEntity(
     val id: String,
     val questionId: String,
     val quizResultId: String,
-    val answer: String
+    val answer: String,
+    val isCorrect: Boolean
 )

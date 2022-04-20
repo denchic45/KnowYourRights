@@ -14,4 +14,7 @@ abstract class QuizResultDao : BaseDao<QuizResultEntity>() {
 
     @Query("SELECT * FROM quiz_result WHERE quizResultId=:quizResultId")
     abstract suspend fun get(quizResultId: String): QuizWithResultAndQuestionAndAnswerEntities
+
+    @Query("SELECT * FROM quiz_result WHERE quizId=:quizId")
+    abstract suspend fun getByQuizId(quizId: String): List<QuizWithResultAndQuestionAndAnswerEntities>
 }

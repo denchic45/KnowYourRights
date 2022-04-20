@@ -8,6 +8,6 @@ import com.denchic45.knowyourrights.data.model.QuizWithQuestionAndAnswerEntities
 @Dao
 abstract class AnswerDao : BaseDao<AnswerEntity>() {
 
-    @Query("SELECT * FROM quiz_result WHERE quizId=:quizId")
-    abstract fun getByQuizId(quizId: String): QuizWithQuestionAndAnswerEntities
+//    @Query("SELECT * FROM quiz_result WHERE quizId=:quizId")
+//    abstract fun getByQuizId(quizId: String): QuizWithQuestionAndAnswerEntities
 }

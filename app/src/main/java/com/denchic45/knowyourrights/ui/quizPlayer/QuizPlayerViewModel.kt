@@ -28,9 +28,17 @@ class QuizPlayerViewModel @Inject constructor(
 
     private var selectedAnswer: Question.Answer? = null
 
+    val quiz = flow { emit(findQuizUseCase(quizId)) }.shareIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        replay = 1
+    )
+
     val readyAnswer: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val showActualAnswer: MutableSharedFlow<ActualAnswer> = MutableSharedFlow()
+
+    val retryQuiz = MutableSharedFlow<String>()
 
     sealed class ActualAnswer {
         data class SingleActualAnswer(
@@ -44,6 +52,7 @@ class QuizPlayerViewModel @Inject constructor(
         ) : ActualAnswer()
 
         data class EnterActualAnswer(
+            val correctAnswer: String,
             val correct: Boolean
         ) : ActualAnswer()
     }
@@ -73,6 +82,13 @@ class QuizPlayerViewModel @Inject constructor(
         }
     }
 
+    fun onEnterAnswerSelect(answer: String) {
+        viewModelScope.launch {
+            selectedAnswer = Question.Answer.EnterAnswer(answer)
+            readyAnswer.emit(true)
+        }
+    }
+
 
     private val questions = flow {
         emit(findQuestionsByQuizUseCaseUseCase(quizId))
@@ -86,10 +102,8 @@ class QuizPlayerViewModel @Inject constructor(
 
     fun onTryAnswerClick() {
         viewModelScope.launch {
+            readyAnswer.emit(false)
             currentQuestion.first().apply {
-
-                showToast(choice.tryAnswer(selectedAnswer!!).toString())
-
                 passedQuestions.add(
                     PassedQuestion(
                         question = currentQuestion.first(),
@@ -116,6 +130,7 @@ class QuizPlayerViewModel @Inject constructor(
                         }
                         is Question.Choice.EnterChoice -> {
                             ActualAnswer.EnterActualAnswer(
+                                (currentQuestion.first().choice.correctAnswer as Question.Answer.EnterAnswer).value,
                                 choice.tryAnswer(selectedAnswer as Question.Answer.EnterAnswer)
                             )
                         }
@@ -128,7 +143,7 @@ class QuizPlayerViewModel @Inject constructor(
                 addQuizResultUseCase(
                     QuizResult(
                         UUIDS.createShort(),
-                        findQuizUseCase(quizId),
+                        quiz.first(),
                         passedQuestions
                     )
                 )
@@ -140,9 +155,15 @@ class QuizPlayerViewModel @Inject constructor(
         }
     }
 
+    fun onRetryClick() {
+        viewModelScope.launch {
+            retryQuiz.emit(quizId)
+        }
+    }
+
     init {
         viewModelScope.launch {
-            delay(1000)
+            delay(2500)
             navigateTo(QuizNavigationDirections.actionGlobalQuestionFragment())
         }
     }

@@ -19,6 +19,7 @@ class QuestionEntity(
     val id: String,
     val quizId: String,
     val title: String,
+    val imageUrl: String?,
     val choiceType: ChoiceType,
     val answers: String,
     val correctAnswer: String

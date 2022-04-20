@@ -1,5 +1,7 @@
 package com.denchic45.knowyourrights.ui.quizPlayer.finish
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -18,6 +20,15 @@ class FinishFragment : BaseFragment<FinishViewModel, FragmentFinishBinding>(
 
     private val playerViewModel: QuizPlayerViewModel by activityViewModels()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            btnCheckResult.setOnClickListener {  }
 
+            btnCheckResult.setOnClickListener { TODO() }
+
+            btnRetry.setOnClickListener { playerViewModel.onRetryClick() }
+        }
+    }
 
 }

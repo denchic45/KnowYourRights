@@ -1,11 +1,14 @@
 package com.denchic45.knowyourrights.ui.quizPlayer
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.denchic45.knowyourrights.R
 import com.denchic45.knowyourrights.databinding.ActivityQuizPlayerBinding
 import com.denchic45.knowyourrights.ui.base.BaseActivity
+import com.denchic45.knowyourrights.utils.collectWhenStarted
 
 class QuizPlayerActivity :
     BaseActivity<QuizPlayerViewModel, ActivityQuizPlayerBinding>(R.layout.activity_quiz_player) {
@@ -15,7 +18,13 @@ class QuizPlayerActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setSupportActionBar(binding.toolbar)
+
+        viewModel.retryQuiz.collectWhenStarted(lifecycleScope) { quizId ->
+            finish()
+            startActivity(Intent(this, QuizPlayerActivity::class.java)
+                .apply { putExtra(QUIZ_ID, quizId) })
+
+        }
     }
 
     companion object {

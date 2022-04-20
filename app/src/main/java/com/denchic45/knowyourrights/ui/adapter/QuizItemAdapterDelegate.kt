@@ -1,9 +1,12 @@
 package com.denchic45.knowyourrights.ui.adapter
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.ImageViewCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.denchic45.knowyourrights.R
 import com.denchic45.knowyourrights.databinding.ItemQuizCardBinding
 import com.denchic45.knowyourrights.ui.model.QuizItem
 import com.denchic45.knowyourrights.utils.viewBinding
@@ -30,12 +33,21 @@ class QuizItemAdapterDelegate :
 
                 tvQuizName.text = item.name
 
-                tvQuizTitleQuestionsCount.text = "${item.questionsCount} вопросов"
+                tvQuizTitleQuestionsCount.text = itemView.context.resources.getQuantityString(
+                    R.plurals.question,
+                    item.questionsCount,
+                    item.questionsCount
+                )
 
-                tvQuizResult.text = item.yourMaxResult?.let {
+                tvQuizResult.text = if (item.yourMaxResult != 0) {
                     ivQuizResult.visibility = View.VISIBLE
+                    ImageViewCompat.setImageTintList(
+                        ivQuizResult,
+                        ColorStateList.valueOf(itemView.context.getColor(R.color.amber_600))
+                    )
                     "Ваш результат: ${item.yourMaxResult}/${item.questionsCount}"
-                } ?: run {
+                    "Ваш результат: ${item.yourMaxResult}/${item.questionsCount}"
+                } else {
                     ivQuizResult.visibility = View.GONE
                     "Вы еще не проходили этот тест"
                 }

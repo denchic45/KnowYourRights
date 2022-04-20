@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -61,7 +62,18 @@ class QuizDetailsFragment : BottomSheetDialogFragment(), HasViewModel<QuizDetail
                 )
             }
 
+            viewModel.openBrowser.collectWhenStarted(lifecycleScope) {
+                val defaultBrowser = Intent.makeMainSelectorActivity(
+                    Intent.ACTION_MAIN,
+                    Intent.CATEGORY_APP_BROWSER
+                )
+                defaultBrowser.data = it.toUri()
+                startActivity(defaultBrowser)
+            }
+
             btnStart.setOnClickListener { viewModel.onPlayClick() }
+
+            btnLecture.setOnClickListener { viewModel.onLectureClick() }
         }
     }
 

@@ -6,6 +6,14 @@
     app:startDestination="@id/startQuizFragment">
 
     <fragment
+        android:id="@+id/quizResultFragment"
+        android:name="com.denchic45.knowyourrights.ui.result.QuizResultFragment"
+        tools:layout="@layout/fragment_quiz_result">
+        <argument
+            android:name="quizResultId"
+            app:argType="string" />
+    </fragment>
+    <fragment
         android:id="@+id/questionFragment"
         android:name="com.denchic45.knowyourrights.ui.quizPlayer.question.QuestionFragment"
         android:label="fragment_question"
@@ -47,4 +55,5 @@
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim"
         app:popUpToInclusive="true" />
+    <action android:id="@+id/action_global_quizResultFragment" app:destination="@id/quizResultFragment" />
 </navigation>

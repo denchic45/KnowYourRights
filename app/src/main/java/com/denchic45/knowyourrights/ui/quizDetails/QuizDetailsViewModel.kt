@@ -14,6 +14,8 @@ class QuizDetailsViewModel @Inject constructor(
     findQuizUseCase: FindQuizUseCase
 ) : BaseViewModel() {
 
+    val openBrowser = MutableSharedFlow<String>()
+
     val quizDetails: SharedFlow<QuizItem> = flow { emit(findQuizUseCase.invoke(quizId)) }
         .shareIn(
             viewModelScope,
@@ -28,6 +30,12 @@ class QuizDetailsViewModel @Inject constructor(
             openQuizPlayer.emit(
                 quizDetails.first().id
             )
+        }
+    }
+
+    fun onLectureClick() {
+        viewModelScope.launch {
+            openBrowser.emit(quizDetails.first().lectureUrl)
         }
     }
 }

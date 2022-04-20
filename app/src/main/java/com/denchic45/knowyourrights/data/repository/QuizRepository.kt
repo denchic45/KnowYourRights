@@ -31,11 +31,35 @@ class QuizRepository @Inject constructor(
 ) {
 
     fun findQuizzes(): Flow<List<QuizItem>> {
-        return quizDao.getAll().map { quizMapper.entityToDomain(it) }
+        return quizDao.getAll().map {
+            it.map { quizEntity ->
+                quizMapper.entityToDomain(
+                    quizEntity,
+                    questionDao.getByQuiz(quizEntity.id).size,
+                    quizResultDao.getByQuizId(quizEntity.id).run {
+                        if (isNotEmpty()) {
+                            maxOf {
+                                it.answerAndQuestionEntities.count { it.answerEntity.isCorrect }
+
+                            }
+                        } else 0
+                    })
+            }
+        }
     }
 
     suspend fun findQuiz(quizId: String): QuizItem {
-        return quizMapper.entityToDomain(quizDao.get(quizId))
+        return quizMapper.entityToDomain(quizDao.get(quizId),
+            questionDao.getByQuiz(quizId).size,
+            quizResultDao.getByQuizId(quizId)
+                .run {
+                    if (isNotEmpty()) {
+                        maxOf {
+                            it.answerAndQuestionEntities.count { it.answerEntity.isCorrect }
+
+                        }
+                    } else 0
+                })
     }
 
     suspend fun findQuestionsByQuiz(quizId: String): List<Question> {
@@ -48,10 +72,6 @@ class QuizRepository @Inject constructor(
             answerDao.upsert(answerMapper.quizResultToAnswerEntities(quizResult))
         }
     }
-
-//    suspend fun findQuizResult(quizId: String): QuizResult {
-//        return answerMapper.entityToQuizResult(answerDao.getByQuizId(quizId))
-//    }
 
     fun findAllQuizResults(): Flow<List<QuizResultItem>> {
         return quizResultDao.getAll().map { quizResultMapper.entityToQuizResultItem(it) }

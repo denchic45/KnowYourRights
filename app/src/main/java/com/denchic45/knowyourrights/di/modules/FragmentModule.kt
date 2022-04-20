@@ -1,6 +1,7 @@
 package com.denchic45.knowyourrights.di.modules
 
 import com.denchic45.knowyourrights.ui.quizDetails.QuizDetailsFragment
+import com.denchic45.knowyourrights.ui.quizPlayer.enterChoice.EnterChoiceFragment
 import com.denchic45.knowyourrights.ui.quizPlayer.finish.FinishFragment
 import com.denchic45.knowyourrights.ui.quizPlayer.multiChoice.MultiChoiceFragment
 import com.denchic45.knowyourrights.ui.quizPlayer.question.QuestionFragment
@@ -41,5 +42,8 @@ interface FragmentModule {
 
     @ContributesAndroidInjector(modules = [IntentModule::class])
     fun contributeMultiChoiceFragment(): MultiChoiceFragment
+
+    @ContributesAndroidInjector(modules = [IntentModule::class])
+    fun contributeEnterChoiceFragment(): EnterChoiceFragment
 
 }

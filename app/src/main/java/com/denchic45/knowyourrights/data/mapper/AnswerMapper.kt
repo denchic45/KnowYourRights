@@ -35,7 +35,13 @@ abstract class AnswerMapper {
         target = "answer",
         qualifiedByName = ["answerValueToString"]
     )
+    @Mapping(source = "passedQuestion", target = "isCorrect", qualifiedByName = ["mapToCorrectAnswerEntity"])
     abstract fun domainToEntity(passedQuestion: PassedQuestion, quizResultId: String): AnswerEntity
+
+    @Named("mapToCorrectAnswerEntity")
+    fun mapToCorrectAnswerEntity(passedQuestion: PassedQuestion): Boolean {
+        return passedQuestion.isCorrectAnswer
+    }
 
     @Named("passedQuestionsToAnswerEntities")
     fun domainToEntity(passedQuestion: List<PassedQuestion>, quizResultId: String): List<AnswerEntity> {

@@ -4,6 +4,7 @@ class Question(
     val id: String,
     val quizId: String,
     val title: String,
+    val imageUrl: String?,
     val choice: Choice
 ) {
 

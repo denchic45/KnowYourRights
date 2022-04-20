@@ -12,15 +12,13 @@ class SingleChoiceViewModel @Inject constructor() : BaseViewModel() {
     val answers = MutableStateFlow<List<SingleChoiceItem>>(emptyList())
 
     fun onQuestionLoad(question: Question) {
-        answers.value = (question.choice as Question.Choice.SingleChoice).answers.map { SingleChoiceItem(it) }
+        answers.value =
+            (question.choice as Question.Choice.SingleChoice).answers.map { SingleChoiceItem(it) }
     }
 
     fun onAnswerItemSelect(position: Int) {
         answers.update {
-            it.mapIndexed {i, item-> item.copy(isChecked = i == position)}
-//            it.toMutableList().apply {
-//                set(position, it[position].copy(isChecked = true))
-//            }
+            it.mapIndexed { i, item -> item.copy(isChecked = i == position) }
         }
     }
 

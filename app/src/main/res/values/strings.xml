@@ -15,4 +15,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <plurals name="question">
+        <item quantity="one">вопрос</item>
+        <item quantity="two">вопроса</item>
+        <item quantity="few">вопроса</item>
+        <item quantity="many">вопросов</item>
+        <item quantity="other">вопросов</item>
+        <item quantity="zero">вопросов</item>
+    </plurals>
 </resources>
