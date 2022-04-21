@@ -34,7 +34,7 @@ class MultiChoiceFragment :
 
         with(binding.root) {
             val answersAdapter = adapter {
-                delegates(MultiChoiceAdapterDelegate())
+                delegates(MultiChoiceAdapterDelegate(true))
                 onClick { position ->
                     viewModel.onAnswerItemSelect(position)
                     lifecycleScope.launchWhenStarted {

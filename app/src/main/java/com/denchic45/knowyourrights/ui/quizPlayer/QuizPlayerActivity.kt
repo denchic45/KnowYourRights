@@ -3,6 +3,7 @@ package com.denchic45.knowyourrights.ui.quizPlayer
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.denchic45.knowyourrights.R
@@ -17,7 +18,11 @@ class QuizPlayerActivity :
     override val viewModel: QuizPlayerViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
+        getDelegate().setLocalNightMode(
+            AppCompatDelegate.MODE_NIGHT_YES);
 
         viewModel.retryQuiz.collectWhenStarted(lifecycleScope) { quizId ->
             finish()

@@ -1,12 +1,19 @@
 package com.denchic45.knowyourrights.ui.quizPlayer.question
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.denchic45.knowyourrights.R
 import com.denchic45.knowyourrights.databinding.FragmentQuestionBinding
 import com.denchic45.knowyourrights.domain.model.Question
@@ -32,12 +39,16 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
                 .collectWhenStarted(lifecycleScope) { question ->
                     tvQuestion.text = question.title
 
-                    ivQuestion.visibility = question.imageUrl?.let {
+                    question.imageUrl?.let {
                         Glide.with(this@QuestionFragment)
                             .load(it)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .centerCrop()
                             .into(ivQuestion)
                         View.VISIBLE
-                    } ?: View.GONE
+                    } ?: run {
+                        ivQuestion.visibility = View.GONE
+                    }
 
                     parentFragmentManager.beginTransaction()
                         .add(

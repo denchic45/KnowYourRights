@@ -17,4 +17,11 @@ abstract class QuizResultDao : BaseDao<QuizResultEntity>() {
 
     @Query("SELECT * FROM quiz_result WHERE quizId=:quizId")
     abstract suspend fun getByQuizId(quizId: String): List<QuizWithResultAndQuestionAndAnswerEntities>
+
+
+    @Query("SELECT * FROM quiz_result WHERE quizId=:quizId")
+    abstract suspend fun observeByQuizId(quizId: String): Flow< List<QuizWithResultAndQuestionAndAnswerEntities>>
+
+    @Query("SELECT * FROM quiz_result WHERE quizId=:quizId ORDER BY timestamp DESC")
+    abstract suspend fun getLastByQuizId(quizId: String): QuizWithResultAndQuestionAndAnswerEntities
 }

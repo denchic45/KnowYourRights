@@ -1,9 +1,8 @@
 package com.denchic45.knowyourrights.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.denchic45.knowyourrights.data.TimestampConverter
+import java.util.*
 
 @Entity(
     tableName = "quiz_result",
@@ -19,5 +18,7 @@ class QuizResultEntity(
     @PrimaryKey
     @ColumnInfo(name = "quizResultId")
     val id: String,
-    val quizId: String
+    val quizId: String,
+    @field:TypeConverters(TimestampConverter::class)
+    val timestamp: Date
 )

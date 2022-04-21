@@ -1,23 +1,35 @@
 package com.denchic45.knowyourrights.ui.adapter
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.ViewGroup
+import com.denchic45.knowyourrights.R
 import com.denchic45.knowyourrights.databinding.ItemSingleChoiceBinding
 import com.denchic45.knowyourrights.ui.model.SingleChoiceItem
+import com.denchic45.knowyourrights.utils.colors
 import com.denchic45.knowyourrights.utils.viewBinding
 import com.denchic45.widget.extendedAdapter.ListItemAdapterDelegate
 
 
-class SingleChoiceAdapterDelegate :
+class SingleChoiceAdapterDelegate(private val isEnabled: Boolean) :
     ListItemAdapterDelegate<SingleChoiceItem, SingleChoiceAdapterDelegate.SingleChoiceHolder>() {
 
-    class SingleChoiceHolder(itemSingleChoiceBinding: ItemSingleChoiceBinding) :
+    class SingleChoiceHolder(
+        itemSingleChoiceBinding: ItemSingleChoiceBinding,
+    ) :
         BaseViewHolder<SingleChoiceItem, ItemSingleChoiceBinding>(itemSingleChoiceBinding) {
         override fun onBind(item: SingleChoiceItem) {
             with(binding.root) {
                 text = item.answer
                 isChecked = item.isChecked
+//                isEnabled = enabled
+                item.isCorrect?.let {
+                    changeColor(
+                        if (it)
+                            R.color.green_600
+                        else
+                            R.color.red_600
+                    )
+                }
             }
         }
 
@@ -25,14 +37,14 @@ class SingleChoiceAdapterDelegate :
             binding.root.isChecked = false
         }
 
-        fun changeColor(color: Int) {
+        fun changeColor(colorId: Int) {
             binding.root.buttonTintList = ColorStateList(
                 arrayOf(
                     intArrayOf(
                         android.R.attr.state_enabled
                     )
                 ), intArrayOf(
-                    color
+                    itemView.context.colors(colorId)
                 )
             )
         }
@@ -57,10 +69,10 @@ class SingleChoiceAdapterDelegate :
                 holder.unselectRadio()
             }
             PAYLOAD_TRUE -> {
-                holder.changeColor(Color.GREEN)
+                holder.changeColor(R.color.green_600)
             }
             PAYLOAD_FALSE -> {
-                holder.changeColor(Color.RED)
+                holder.changeColor(R.color.red_600)
             }
         }
     }

@@ -31,7 +31,7 @@ class QuizRepository @Inject constructor(
 ) {
 
     fun findQuizzes(): Flow<List<QuizItem>> {
-        return quizDao.getAll().map {
+        return quizDao.observeAll().map {
             it.map { quizEntity ->
                 quizMapper.entityToDomain(
                     quizEntity,
@@ -79,5 +79,9 @@ class QuizRepository @Inject constructor(
 
     suspend fun findQuizResult(quizResultId: String): QuizResult {
         return answerMapper.entityToQuizResult(quizResultDao.get(quizResultId))
+    }
+
+    suspend fun findQuizResultByQuiz(quizId: String): QuizResultItem {
+        return quizResultMapper.entityToQuizResultItem(quizResultDao.getLastByQuizId(quizId))
     }
 }

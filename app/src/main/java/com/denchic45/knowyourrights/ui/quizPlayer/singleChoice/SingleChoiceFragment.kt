@@ -32,7 +32,7 @@ class SingleChoiceFragment :
 
         with(binding.root) {
             val answersAdapter = adapter {
-                delegates(SingleChoiceAdapterDelegate())
+                delegates(SingleChoiceAdapterDelegate(true))
                 onClick { position ->
                     viewModel.onAnswerItemSelect(position)
                     lifecycleScope.launchWhenStarted {

@@ -13,6 +13,7 @@ import com.denchic45.knowyourrights.R
 import com.denchic45.knowyourrights.databinding.ItemEnterChoiceBinding
 import com.denchic45.knowyourrights.ui.quizPlayer.QuizPlayerViewModel
 import com.denchic45.knowyourrights.utils.collectWhenStarted
+import com.denchic45.knowyourrights.utils.colors
 import com.denchic45.kts.ui.BaseFragment
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.take
@@ -61,7 +62,7 @@ class EnterChoiceFragment :
                 .map { it as QuizPlayerViewModel.ActualAnswer.EnterActualAnswer }
                 .collectWhenStarted(lifecycleScope) { actualAnswer ->
                     if (actualAnswer.correct) {
-                        binding.til.boxStrokeColor = Color.GREEN
+                        binding.til.boxStrokeColor = context.colors(R.color.green_600)
                     } else {
                         binding.til.error = actualAnswer.correctAnswer
                     }

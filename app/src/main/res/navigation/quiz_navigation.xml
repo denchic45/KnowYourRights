@@ -45,7 +45,11 @@
         android:id="@+id/finishFragment"
         android:name="com.denchic45.knowyourrights.ui.quizPlayer.finish.FinishFragment"
         android:label="fragment_finish"
-        tools:layout="@layout/fragment_finish" />
+        tools:layout="@layout/fragment_finish" >
+        <argument
+            android:name="quizId"
+            app:argType="string" />
+    </fragment>
     <action
         android:id="@+id/action_global_finishFragment"
         app:destination="@id/finishFragment"

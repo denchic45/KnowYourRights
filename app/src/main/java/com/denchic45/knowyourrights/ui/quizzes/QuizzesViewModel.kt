@@ -1,12 +1,15 @@
 package com.denchic45.knowyourrights.ui.quizzes
 
 import androidx.lifecycle.viewModelScope
+import com.denchic45.knowyourrights.data.repository.QuizRepository
 import com.denchic45.knowyourrights.domain.useCase.FindQuizzesUseCase
 import com.denchic45.knowyourrights.ui.base.BaseViewModel
 import com.denchic45.knowyourrights.ui.model.QuizItem
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class QuizzesViewModel @Inject constructor(
@@ -23,4 +26,6 @@ class QuizzesViewModel @Inject constructor(
 
     val quizzes: StateFlow<List<QuizItem>> =
         findQuizzesUseCase().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+
 }

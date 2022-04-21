@@ -13,6 +13,7 @@ import com.denchic45.knowyourrights.utils.UUIDS
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -144,10 +145,11 @@ class QuizPlayerViewModel @Inject constructor(
                     QuizResult(
                         UUIDS.createShort(),
                         quiz.first(),
-                        passedQuestions
+                        passedQuestions,
+                        Date()
                     )
                 )
-                navigateTo(QuizNavigationDirections.actionGlobalFinishFragment())
+                navigateTo(QuizNavigationDirections.actionGlobalFinishFragment(quizId))
             } else {
                 currentQuestionPosition.update { it + 1 }
                 navigateTo(QuizNavigationDirections.actionGlobalQuestionFragment())

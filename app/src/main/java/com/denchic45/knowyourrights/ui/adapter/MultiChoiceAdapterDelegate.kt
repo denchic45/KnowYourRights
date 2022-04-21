@@ -1,35 +1,44 @@
 package com.denchic45.knowyourrights.ui.adapter
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.ViewGroup
+import com.denchic45.knowyourrights.R
 import com.denchic45.knowyourrights.databinding.ItemMultiChoiceBinding
 import com.denchic45.knowyourrights.ui.model.MultiChoiceItem
+import com.denchic45.knowyourrights.utils.colors
 import com.denchic45.knowyourrights.utils.viewBinding
 import com.denchic45.widget.extendedAdapter.ListItemAdapterDelegate
 
-class MultiChoiceAdapterDelegate :
+class MultiChoiceAdapterDelegate(private val isEnabled: Boolean) :
     ListItemAdapterDelegate<MultiChoiceItem, MultiChoiceAdapterDelegate.MultiChoiceHolder>() {
 
-    class MultiChoiceHolder(itemMultiChoiceBinding: ItemMultiChoiceBinding) :
+    class MultiChoiceHolder(
+        itemMultiChoiceBinding: ItemMultiChoiceBinding,
+        private val enabled: Boolean
+    ) :
         BaseViewHolder<MultiChoiceItem, ItemMultiChoiceBinding>(itemMultiChoiceBinding) {
 
         override fun onBind(item: MultiChoiceItem) {
             with(binding.root) {
                 text = item.answer
                 isChecked = item.isChecked
+                //    isEnabled = enabled
+                item.isCorrect?.let {
+                    changeColor(
+                        if (it)
+                            R.color.green_600
+                        else
+                            R.color.red_600
+                    )
+                }
             }
         }
 
-        fun changeColor(color: Int) {
+        fun changeColor(colorId: Int) {
             binding.root.buttonTintList = ColorStateList(
                 arrayOf(
-                    intArrayOf(
-                        android.R.attr.state_enabled
-                    )
-                ), intArrayOf(
-                    color
-                )
+                    intArrayOf(android.R.attr.state_enabled)
+                ), intArrayOf(itemView.context.colors(colorId))
             )
         }
     }
@@ -47,16 +56,16 @@ class MultiChoiceAdapterDelegate :
         super.onBindViewHolder(item, holder, payload)
         when (payload) {
             PAYLOAD_TRUE -> {
-                holder.changeColor(Color.GREEN)
+                holder.changeColor(R.color.green_600)
             }
             PAYLOAD_FALSE -> {
-                holder.changeColor(Color.RED)
+                holder.changeColor(R.color.red_600)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): MultiChoiceHolder {
-        return MultiChoiceHolder(parent.viewBinding(ItemMultiChoiceBinding::inflate))
+        return MultiChoiceHolder(parent.viewBinding(ItemMultiChoiceBinding::inflate), isEnabled)
     }
 
     companion object {

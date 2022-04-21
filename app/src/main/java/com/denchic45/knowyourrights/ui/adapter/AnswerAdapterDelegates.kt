@@ -2,7 +2,6 @@ package com.denchic45.knowyourrights.ui.adapter
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.ViewGroup
 import com.denchic45.knowyourrights.databinding.ItemAnswerBinding
 import com.denchic45.knowyourrights.domain.model.PassedQuestion
@@ -25,9 +24,9 @@ class AnswerAdapterDelegate :
                 tvQuestionName.text = item.question.title
                 val adapter: DelegationAdapterExtended = adapter {
                     delegates(
-                        SingleChoiceAdapterDelegate(),
-                        MultiChoiceAdapterDelegate(),
-                        EnterAnswerAdapterDelegate()
+                        SingleChoiceAdapterDelegate(true),
+                        MultiChoiceAdapterDelegate(true),
+                        EnterAnswerAdapterDelegate(true)
                     )
                 }
                 rvAnswers.adapter = adapter
@@ -38,51 +37,68 @@ class AnswerAdapterDelegate :
                             .map { someAnswer ->
                                 SingleChoiceItem(
                                     answer = someAnswer,
-                                    isChecked = item.answer.value == someAnswer
+                                    isChecked = item.answer.value == someAnswer,
+                                    isCorrect = when {
+                                        item.answer.value == someAnswer -> {
+                                            item.isCorrectAnswer
+                                        }
+                                        item.question.choice.correctAnswer.value == someAnswer -> true
+                                        else -> null
+                                    }
                                 )
                             })
-                        Handler(Looper.getMainLooper()).post {
-                            adapter.notifyItemChanged(
-                                item.question.choice.answers.indexOf(
-                                    item.question.choice.correctAnswer.value
-                                ), SingleChoiceAdapterDelegate.PAYLOAD_TRUE
-                            )
-                            if (item.question.choice.correctAnswer.value != item.answer.value) {
-                                adapter.notifyItemChanged(
-                                    item.question.choice.answers.indexOf(
-                                        item.answer.value
-                                    ), SingleChoiceAdapterDelegate.PAYLOAD_FALSE
-                                )
-                            }
-                        }
+//                        Handler(Looper.getMainLooper()).post {
+//                            adapter.notifyItemChanged(
+//                                item.question.choice.answers.indexOf(
+//                                    item.question.choice.correctAnswer.value
+//                                ), SingleChoiceAdapterDelegate.PAYLOAD_TRUE
+//                            )
+//                            if (item.question.choice.correctAnswer.value != item.answer.value) {
+//                                adapter.notifyItemChanged(
+//                                    item.question.choice.answers.indexOf(
+//                                        item.answer.value
+//                                    ), SingleChoiceAdapterDelegate.PAYLOAD_FALSE
+//                                )
+//                            }
+//                        }
                     }
                     is Question.Answer.MultiAnswer -> {
-                        adapter.submit((item.question.choice as Question.Choice.MultiChoice).answers
-                            .map { someAnswer ->
-                                MultiChoiceItem(
-                                    answer = someAnswer,
-                                    isChecked = item.answer.value.contains(someAnswer)
-                                )
-                            })
-
-                        Handler(Looper.getMainLooper()).post {
-                            item.question.choice.getCorrectAndWrongAnswerPositions(
+                        val passedAnswers = (item.question.choice as Question.Choice.MultiChoice)
+                            .getCorrectAndWrongAnswerPositions(
                                 item.answer
-                            ).apply {
-                                first.forEach {
-                                    adapter.notifyItemChanged(
-                                        it,
-                                        MultiChoiceAdapterDelegate.PAYLOAD_TRUE
+                            )
+                        adapter.submit(
+                            item.question.choice.answers
+                                .mapIndexed { index, someAnswer ->
+                                    MultiChoiceItem(
+                                        answer = someAnswer,
+                                        isChecked = item.answer.value.contains(someAnswer),
+                                        isCorrect = when {
+                                            passedAnswers.first.contains(index) -> true
+                                            passedAnswers.second.contains(index) -> false
+                                            else -> null
+                                        }
                                     )
-                                }
-                                second.forEach {
-                                    adapter.notifyItemChanged(
-                                        it,
-                                        MultiChoiceAdapterDelegate.PAYLOAD_FALSE
-                                    )
-                                }
-                            }
-                        }
+                                })
+
+//                        Handler(Looper.getMainLooper()).post {
+//                            item.question.choice.getCorrectAndWrongAnswerPositions(
+//                                item.answer
+//                            ).apply {
+//                                first.forEach {
+//                                    adapter.notifyItemChanged(
+//                                        it,
+//                                        MultiChoiceAdapterDelegate.PAYLOAD_TRUE
+//                                    )
+//                                }
+//                                second.forEach {
+//                                    adapter.notifyItemChanged(
+//                                        it,
+//                                        MultiChoiceAdapterDelegate.PAYLOAD_FALSE
+//                                    )
+//                                }
+//                            }
+//                        }
                     }
                     is Question.Answer.EnterAnswer -> {
                         adapter.submit(

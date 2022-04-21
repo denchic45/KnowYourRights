@@ -33,7 +33,7 @@ class QuizResultFragment : BaseFragment<QuizResultViewModel, FragmentQuizResultB
             val adapter = adapter {
                 delegates((AnswerAdapterDelegate()))
             }
-            root.adapter = adapter
+            rv.adapter = adapter
             viewModel.result.collectWhenStarted(lifecycleScope) {
                 adapter.submit(it.passedQuestions)
             }

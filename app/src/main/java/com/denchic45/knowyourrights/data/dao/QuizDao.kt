@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 abstract class QuizDao : BaseDao<QuizEntity>() {
 
     @Query("SELECT * FROM quiz")
-    abstract fun getAll(): Flow<List<QuizEntity>>
+    abstract fun observeAll(): Flow<List<QuizEntity>>
 
     @Query("SELECT * FROM quiz WHERE quizId=:quizId")
     abstract fun observe(quizId: String): Flow<QuizEntity>

@@ -31,19 +31,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ваш результат: x/y"
-        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_finish_title" />
 
     <Button
-        android:id="@+id/btn_check_result"
+        android:id="@+id/btn_back"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="?actionBarSize"
-        android:text="Последний результат"
+        android:text="Обратно к викторинам"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_finish_quiz_result" />
 

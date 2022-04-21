@@ -2,8 +2,8 @@ package com.denchic45.knowyourrights.di.modules
 
 import com.denchic45.knowyourrights.ui.quizDetails.QuizDetailsFragment
 import com.denchic45.knowyourrights.ui.quizPlayer.QuizPlayerActivity
+import com.denchic45.knowyourrights.ui.quizPlayer.finish.FinishFragment
 import com.denchic45.knowyourrights.ui.result.QuizResultFragment
-import com.denchic45.knowyourrights.ui.resultts.QuizResultsFragment
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -27,5 +27,11 @@ object IntentModule {
     @Provides
     fun provideQuizResultId(quizResultFragment: QuizResultFragment): String {
         return quizResultFragment.navArgs.quizResultId
+    }
+
+    @Named(FinishFragment.QUIZ_ID)
+    @Provides
+    fun provideQuizIdToFinishFragment(finishFragment: FinishFragment): String {
+        return finishFragment.navArgs.quizId
     }
 }
