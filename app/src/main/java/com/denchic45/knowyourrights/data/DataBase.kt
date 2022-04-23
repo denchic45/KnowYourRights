@@ -205,7 +205,7 @@ abstract class DataBase : RoomDatabase() {
                                             title = "Согласно общему правилу срок административного задержания должен быть не более",
                                             imageUrl = "https://www.advo24.ru/upload/iblock/1f6/zaderzhanie_srok_sud_sizo.jpg",
                                             choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
-                                            answers = " 1 суток;" +
+                                            answers = "1 суток;" +
                                                     "2 суток;" +
                                                     "3 часов;" +
                                                     "6 часов",
@@ -277,7 +277,7 @@ abstract class DataBase : RoomDatabase() {
                                         QuestionEntity(
                                             id = UUIDS.createShort(),
                                             quizId = quizId2,
-                                            title = " Сфера применения контрактов определяется:",
+                                            title = "Сфера применения контрактов определяется:",
                                             imageUrl = null,
                                             choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
                                             answers = "Сторонами трудового договора;Законодательством РФ;Конституцией РФ;Профсоюзами",
