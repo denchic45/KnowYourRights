@@ -42,8 +42,8 @@
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
         android:text="Обратно к викторинам"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_finish_quiz_result" />
@@ -52,10 +52,10 @@
         android:id="@+id/btn_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
         android:text="Пройти еще раз"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_finish_quiz_result" />
+        app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,7 +77,7 @@ abstract class DataBase : RoomDatabase() {
                                                 id = quizId3,
                                                 name = "Права ребенка",
                                                 imageUrl = "https://www.ya-roditel.ru/upload/resizeman/1__upload_iblock_709_709fa4f487439ca4bb56b822f909779c.jpg?cache=Y",
-                                                lectureUrl = ""
+                                                lectureUrl = "https://sch-nkz.edu.yar.ru/roditelyam/prava_rebenka_i_ih_zashchita.html"
                                             ),
                                             QuizEntity(
                                                 id = quizId4,
