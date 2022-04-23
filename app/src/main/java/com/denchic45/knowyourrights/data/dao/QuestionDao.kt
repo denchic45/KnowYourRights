@@ -12,5 +12,5 @@ abstract class QuestionDao : BaseDao<QuestionEntity>() {
     abstract suspend fun getByQuiz(quizId: String): List<QuestionEntity>
 
     @Query("SELECT * FROM question WHERE quizId=:quizId")
-    abstract suspend fun observeByQuiz(quizId: String): Flow<List<QuestionEntity>>
+    abstract fun observeByQuiz(quizId: String): Flow<List<QuestionEntity>>
 }

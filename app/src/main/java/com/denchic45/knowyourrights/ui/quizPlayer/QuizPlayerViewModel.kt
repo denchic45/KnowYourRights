@@ -13,6 +13,7 @@ import com.denchic45.knowyourrights.utils.UUIDS
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -146,7 +147,7 @@ class QuizPlayerViewModel @Inject constructor(
                         UUIDS.createShort(),
                         quiz.first(),
                         passedQuestions,
-                        Date()
+                        LocalDateTime.now()
                     )
                 )
                 navigateTo(QuizNavigationDirections.actionGlobalFinishFragment(quizId))

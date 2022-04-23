@@ -10,9 +10,7 @@ import org.mapstruct.Mapping
 @Mapper(uses = [AnswerMapper::class])
 abstract class QuizMapper {
 
-    abstract fun entityToDomain(quizEntity: QuizEntity, questionsCount:Int, yourMaxResult: Int?): QuizItem
-
-    abstract fun entityToDomain(quizEntity: List<QuizEntity>): List<QuizItem>
+    abstract fun entityToDomain(quizEntity: QuizEntity, questionsCount:Int, maxResult: Int): QuizItem
 
     @Mapping(source = "quizItem.id", target = "quizId")
     abstract fun domainToEntity(quizResult: QuizResult): QuizResultEntity

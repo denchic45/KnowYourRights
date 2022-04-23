@@ -1,6 +1,7 @@
 package com.denchic45.knowyourrights.ui.quizzes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,7 @@ class QuizzesFragment :
         }
         binding.rv.adapter = adapter
         viewModel.quizzes.collectWhenStarted(lifecycleScope) {
+            Log.d("lol", "onViewCreated submit: ${it.size}")
             adapter. submit(it)
         }
     }

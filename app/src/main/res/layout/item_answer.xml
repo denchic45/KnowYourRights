@@ -15,6 +15,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_answers"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

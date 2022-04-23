@@ -9,7 +9,7 @@ data class QuizResult(
     override val id: String,
     val quizItem: QuizItem,
     val passedQuestions: List<PassedQuestion>,
-    val timestamp: Date
+    val timestamp: LocalDateTime
 ) : DomainModel {
     fun countOfCorrects(): Int {
         return passedQuestions.count { it.isCorrectAnswer }

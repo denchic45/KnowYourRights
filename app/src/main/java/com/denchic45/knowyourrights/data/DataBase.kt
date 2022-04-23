@@ -55,6 +55,9 @@ abstract class DataBase : RoomDatabase() {
                             suspend fun addQuizzes() {
                                 val quizId1 = UUIDS.createShort()
                                 val quizId2 = UUIDS.createShort()
+                                val quizId3 = UUIDS.createShort()
+                                val quizId4 = UUIDS.createShort()
+                                val quizId5 = UUIDS.createShort()
                                 instance!!.quizDao().apply {
                                     upsert(
                                         listOf(
@@ -71,22 +74,22 @@ abstract class DataBase : RoomDatabase() {
                                                 lectureUrl = "https://moodle.kstu.ru/mod/book/view.php?id=16370"
                                             ),
                                             QuizEntity(
-                                                id = UUIDS.createShort(),
+                                                id = quizId3,
                                                 name = "Права ребенка",
                                                 imageUrl = "https://www.ya-roditel.ru/upload/resizeman/1__upload_iblock_709_709fa4f487439ca4bb56b822f909779c.jpg?cache=Y",
                                                 lectureUrl = ""
                                             ),
                                             QuizEntity(
-                                                id = UUIDS.createShort(),
+                                                id = quizId4,
                                                 name = "Потребитель и его права",
                                                 imageUrl = "https://avatars.mds.yandex.net/get-zen_doc/1866022/pub_5d189b92913f0600acb02862_5d189d9457394600adca7815/scale_1200",
-                                                lectureUrl = ""
+                                                lectureUrl = "http://promtorg.volgograd.ru/current-activity/trade/protection/info/47482/"
                                             ),
                                             QuizEntity(
-                                                id = UUIDS.createShort(),
+                                                id = quizId5,
                                                 name = "Право на информацию",
                                                 imageUrl = "https://4brain.ru/blog/wp-content/uploads/2019/08/critical-information-analysis.jpg",
-                                                lectureUrl = ""
+                                                lectureUrl = "https://intuit.ru/studies/professional_skill_improvements/20696/courses/843/lecture/31511"
                                             ),
                                         )
                                     )
@@ -321,6 +324,331 @@ abstract class DataBase : RoomDatabase() {
                                                     "Да, как и другие работники, на 28-дневный отпуск, согласно статье 19 ТК;" +
                                                     "Нет",
                                             correctAnswer = "Да, как и другие работники, на 28-дневный отпуск, согласно статье 19 ТК"
+                                        ),
+                                    ) + listOf(
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "С какого возраста несовершеннолетний может обратиться в суд за защитой своих прав?",
+                                            imageUrl = "data:image/jpeg;base64,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",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "16 лет;" +
+                                                    "12 лет;" +
+                                                    "14 лет;" +
+                                                    "10 лет",
+                                            correctAnswer = "14 лет"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "Согласно международному законодательству ребенок обладает правами:",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "с момента рождения;" +
+                                                    "по достижению 14 лет;" +
+                                                    "по достижению 16 лет;" +
+                                                    "по достижению 18 лет",
+                                            correctAnswer = "с момента рождения"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "Семья, материнство, отцовство и детство в РФ находится под защитой:",
+                                            imageUrl = "https://дом-родословия.рф/media/k2/items/cache/39eee751af30032eeece2f48de2de4ba_XL.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "полиции;" +
+                                                    "государства;" +
+                                                    "органов загса;" +
+                                                    "суда",
+                                            correctAnswer = "государства"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "По определению ООН, подросток – это лицо в возрасте от 10 лет до...",
+                                            imageUrl = "https://53news.ru/wp-content/uploads/2018/04/starorusskij-podrostok-s-gollivudskoj-ulybkoj-postradal-iz-za-khalatnosti-vzroslykh-2.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.ENTER_CHOICE,
+                                            answers = "",
+                                            correctAnswer = "19"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "Документ, защищающий права ребенка и имеющий обязательную силу для подписавших его стран, - это …",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "Декларация;" +
+                                                    "Программа;" +
+                                                    "Конвенция",
+                                            correctAnswer = "Конвенция"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "Согласно «Всеобщей Декларации прав человека» к элементарным правам личности не относится право на …",
+                                            imageUrl = "https://ktonanovenkogo.ru/image/prava-cheloveka-chto-takoe.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "свободу;" +
+                                                    "жизнь;" +
+                                                    "личную неприкосновенность;" +
+                                                    "труд",
+                                            correctAnswer = "труд"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "Ребенок имеет право на свободное выражение собственного мнения",
+                                            imageUrl = "https://deti48.ru/images/shutterstock_79442740.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "если это не наносит вреда другим;" +
+                                                    "безоговорочно;" +
+                                                    "по разрешению старших;" +
+                                                    "не имеет",
+                                            correctAnswer = "если это не наносит вреда другим"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId3,
+                                            title = "Какой международный документ был принят в 1959г. Генеральной Ассамблеей ООН?",
+                                            imageUrl = "https://tyumedia.ru/i/n/206/253206/253206_b7baa6e3a712.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "Конвенция о правах ребенка;" +
+                                                    "Конституция о правах ребенка;" +
+                                                    "Международный пакт о правах ребёнка;" +
+                                                    "Декларация прав ребёнка",
+                                            correctAnswer = "Декларация прав ребёнка"
+                                        )
+                                    ) + listOf(
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Какой характер несут отношения с участием потребителей по законодательству о защите прав потребителей?",
+                                            imageUrl = "https://elm52.ru/common/images/user1/osobennosti-rassmotreniya-del-o-zashite-prav-potrebitelya.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "публичный характер;" +
+                                                    "частно-публичный характер;" +
+                                                    "частный характер",
+                                            correctAnswer = "публичный характер"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Вправе ли банк в одностороннем порядке менять условия кредитования (например, увеличивать процентную ставку)?",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "Да;" +
+                                                    "Да, но банк должен уведомить меня об этом;" +
+                                                    "Нет, без моего согласия не вправе",
+                                            correctAnswer = "Нет, без моего согласия не вправе"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "При расторжении договора купли-продажи товара с недостатками потребитель вправе",
+                                            imageUrl = "https://pravo-sfera.ru/image/rastorj-dogovora-2jpg.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "взыскать моральный ущерб с изготовителя;" +
+                                                    "оставить товар с недостатками у себя;" +
+                                                    "требовать возмещения убытков у продавца;" +
+                                                    "требовать уменьшения стоимости товара с недостатками",
+                                            correctAnswer = "требовать возмещения убытков у продавца"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Договор розничной купли-продажи с использованием автоматов считается заключенным с момента",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "совершения потребителем действий, необходимых для получения товара;" +
+                                                    "приобретения потребителем знака оплаты товара;" +
+                                                    "опускания знака оплаты товара или денежной суммы в прорезь автомата;" +
+                                                    "получения товара потребителем",
+                                            correctAnswer = "приобретения потребителем знака оплаты товара"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Требование потребителя о соразмерном уменьшении покупной цены должно быть удовлетворено в течение\n",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "3 месяцев со дня получения продавцом требования;" +
+                                                    "10 дней со дня его предъявления;" +
+                                                    "14 дней со дня его предъявления",
+                                            correctAnswer = "10 дней со дня его предъявления"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Из перечисленных товаров, срок годности устанавливается на",
+                                            imageUrl = "https://pravobez.ru/media/uploads//posmotri-srok-godnosti-vozmi-tolko-esli-svezhee_45fd5d088bee4d8.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.MULTI_CHOICE,
+                                            answers = "медикаменты;" +
+                                                    "косметика;" +
+                                                    "электроника;" +
+                                                    "мототехника;" +
+                                                    "продукты питания",
+                                            correctAnswer = "медикаменты;косметика;продукты питания"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Продавец может установить гарантийный срок на товар, если",
+                                            imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTRvPBA6Dx7_5qLso40Nen5NR_OC6BbJ5JGQ&usqp=CAU",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "продавец имеет на это согласие изготовителя;" +
+                                                    "он не был установлен изготовителем и равняется 6 месяцам;" +
+                                                    "данная обязанность установлена соглашением сторон",
+                                            correctAnswer = "он не был установлен изготовителем и равняется 6 месяцам"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Риск случайной гибели товара переходит на покупателя с момента",
+                                            imageUrl = "https://365calend.ru/wp-content/uploads/2020/08/Razbitaya-vaza-tolkovanie-primety.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "оплаты стоимости товара покупателем;" +
+                                                    "когда оплаченный товар оставлен у продавца для маркировки;" +
+                                                    "заключения договора купли-продажи;" +
+                                                    "когда продавец исполнил свою обязанность по передачи товара покупателю",
+                                            correctAnswer = "заключения договора купли-продажи"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Кто обеспечивает безопасность товара в течение срока службы?",
+                                            imageUrl = "https://www.garant.ru/files/9/3/1451039/prava_potrebiteley_pravovie_azi_v_voprosah_i_otvetah_300.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "изготовитель;" +
+                                                    "продавец;" +
+                                                    "покупатель;" +
+                                                    "иные ответственные лица",
+                                            correctAnswer = "изготовитель"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId4,
+                                            title = "Кто определяет время наступления сезона для сезонных товаров:",
+                                            imageUrl = "https://dolauto.ru/upload/iblock/342/342bf094f83a6209a6c2d993b7eaecf3.png",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "правительство Российской Федерации;" +
+                                                    "продавец этих товаров самостоятельно;" +
+                                                    "субъекты Российской Федерации",
+                                            correctAnswer = "субъекты Российской Федерации"
+                                        ),
+                                    ) + listOf(
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "Режим защиты информации не устанавливается в отношении сведений, относящихся к...",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "государственной тайне;" +
+                                                    "конфиденциальной информации;" +
+                                                    "деятельности государственных деятелей;" +
+                                                    "персональным данным",
+                                            correctAnswer = "деятельности государственных деятелей"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "В регистрации средства массовой информации не может быть отказано...",
+                                            imageUrl = "https://tvorcheskie-proekty.ru/files/images/smi.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "по мотивам нецелесообразности;" +
+                                                    "когда заявление подано не соответствующим лицом;" +
+                                                    "даже если сведения в заявлении не соответствуют действительности",
+                                            correctAnswer = "по мотивам нецелесообразности"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "Засекречиванию подлежат сведения о...",
+                                            imageUrl = "https://cdn3.static1-sima-land.com/items/306945/0/1600.jpg?v=0",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "состоянии преступности;" +
+                                                    "силах и средствах гражданской обороны;" +
+                                                    "фактах нарушения прав и свобод человека и гражданина",
+                                            correctAnswer = "силах и средствах гражданской обороны"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "Режим документированной информации – это...",
+                                            imageUrl = "https://autogear.ru/misc/i/gallery/20380/2026498.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "выделенная информация по определенной цели;" +
+                                                    "электронный документ с электронно-цифровой подписью;" +
+                                                    "выделенная информация в любой знаковой форме",
+                                            correctAnswer = "электронный документ с электронно-цифровой подписью"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "Режим общественного достояния устанавливается для",
+                                            imageUrl = "https://i-fakt.ru/wp-content/uploads/2019/10/prazdik-den-obschesctvennogo-dostoyaniya.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "для государственных органов и муниципальных образований;" +
+                                                    "любой общедоступной информации;" +
+                                                    "сведений, которые являются уникальными, незаменимыми по своей природе;" +
+                                                    "любой общественной организации",
+                                            correctAnswer = "сведений, которые являются уникальными, незаменимыми по своей природе"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "С точки зрения информационного права информация – это...",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "форма выражения объективных знаний;" +
+                                                    "сведения о законодательстве, правовых явлениях, правоприменительной деятельности;" +
+                                                    "сведения независимо от формы их представления;" +
+                                                    "данные о развитии конкретной правовой науки и ее практическом применении",
+                                            correctAnswer = "сведения независимо от формы их представления"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "К служебной тайне не относится...",
+                                            imageUrl = "https://autogear.ru/misc/i/gallery/26556/1305518.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.MULTI_CHOICE,
+                                            answers = "тайна деятельности соответствующего органа;" +
+                                                    "профессиональная тайна;" +
+                                                    "вред, причиненный здоровью работника в связи с производственной травмой",
+                                            correctAnswer = "вред, причиненный здоровью работника в связи с производственной травмой"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "В правовой режим документированной информации входит...",
+                                            imageUrl = null,
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "тайна частной жизни;" +
+                                                    "банковская тайна;" +
+                                                    "электронная цифровая подпись;" +
+                                                    "государственная тайна",
+                                            correctAnswer = "электронная цифровая подпись"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "Основное средство антивирусной защиты данных",
+                                            imageUrl = "https://media.kingston.com/kingston/hero/ktc-hero-solutions-data-security-who-is-responsible-for-cyber-security-lg.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "резервное копирование ценных данных;" +
+                                                    "подготовка квалифицированных кадров в сфере информационной безопасности;" +
+                                                    "регулярное сканирование жестких дисков",
+                                            correctAnswer = "резервное копирование ценных данных"
+                                        ),
+                                        QuestionEntity(
+                                            id = UUIDS.createShort(),
+                                            quizId = quizId5,
+                                            title = "Дети до 6 лет не вправе",
+                                            imageUrl = "https://img.freepik.com/free-photo/school-boy-with-laptop-at-table-at-home-child-using-digital-technology-and-internet-communication_494619-402.jpg",
+                                            choiceType = QuestionEntity.ChoiceType.SINGLE_CHOICE,
+                                            answers = "с разрешения законных представителей выходить в Интернет;" +
+                                                    "с согласия законных представителей пользоваться телефонными услугами;" +
+                                                    "с согласия законных представителей совершать сделки с компьютерной техникой",
+                                            correctAnswer = "с согласия законных представителей совершать сделки с компьютерной техникой"
                                         ),
                                     )
                                 )

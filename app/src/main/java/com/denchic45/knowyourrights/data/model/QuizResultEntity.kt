@@ -2,6 +2,7 @@ package com.denchic45.knowyourrights.data.model
 
 import androidx.room.*
 import com.denchic45.knowyourrights.data.TimestampConverter
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity(
@@ -20,5 +21,5 @@ class QuizResultEntity(
     val id: String,
     val quizId: String,
     @field:TypeConverters(TimestampConverter::class)
-    val timestamp: Date
+    val timestamp: LocalDateTime
 )

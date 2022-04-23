@@ -14,8 +14,7 @@ import com.denchic45.knowyourrights.domain.model.Question
 import com.denchic45.knowyourrights.domain.model.QuizResult
 import com.denchic45.knowyourrights.ui.model.QuizItem
 import com.denchic45.knowyourrights.ui.model.QuizResultItem
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class QuizRepository @Inject constructor(
@@ -31,19 +30,23 @@ class QuizRepository @Inject constructor(
 ) {
 
     fun findQuizzes(): Flow<List<QuizItem>> {
-        return quizDao.observeAll().map {
-            it.map { quizEntity ->
-                quizMapper.entityToDomain(
-                    quizEntity,
-                    questionDao.getByQuiz(quizEntity.id).size,
-                    quizResultDao.getByQuizId(quizEntity.id).run {
-                        if (isNotEmpty()) {
-                            maxOf {
-                                it.answerAndQuestionEntities.count { it.answerEntity.isCorrect }
-
-                            }
-                        } else 0
-                    })
+        return quizDao.observeAll().flatMapConcat {
+            combine(it.map { quizEntity ->
+                combine(questionDao.observeByQuiz(quizEntity.id), quizResultDao.observeByQuizId(quizEntity.id)) { questions, result->
+                    quizMapper.entityToDomain(
+                        quizEntity,
+                        questionDao.getByQuiz(quizEntity.id).size,
+                        result.run {
+                            if (isNotEmpty()) {
+                                maxOf {
+                                    it.answerAndQuestionEntities.count { it.answerEntity.isCorrect }
+                                }
+                            } else 0
+                        }
+                    )
+                }
+            }) {
+                it.toList()
             }
         }
     }

@@ -5,6 +5,6 @@ data class QuizItem(
     val name: String,
     val questionsCount: Int,
     val imageUrl: String,
-    val yourMaxResult: Int,
+    val maxResult: Int,
     val lectureUrl: String
 ) : UiModel

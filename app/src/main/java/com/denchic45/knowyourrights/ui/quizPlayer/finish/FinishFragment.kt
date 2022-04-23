@@ -38,8 +38,8 @@ class FinishFragment : BaseFragment<FinishViewModel, FragmentFinishBinding>(
                 tvFinishQuizResult.text = "Вы ответили правильно на ${
                     resources.getQuantityString(
                         R.plurals.question,
-                        it.yourMaxResult,
-                        it.yourMaxResult
+                        it.maxResult,
+                        it.maxResult
                     )
                 } из ${it.questionsCount}"
             }

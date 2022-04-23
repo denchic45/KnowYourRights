@@ -5,6 +5,7 @@ import com.denchic45.knowyourrights.databinding.ItemQuizResultBinding
 import com.denchic45.knowyourrights.ui.model.QuizResultItem
 import com.denchic45.knowyourrights.utils.viewBinding
 import com.denchic45.widget.extendedAdapter.ListItemAdapterDelegate
+import java.time.format.DateTimeFormatter
 
 class QuizResultAdapterDelegate :
     ListItemAdapterDelegate<QuizResultItem, QuizResultAdapterDelegate.QuizResultHolder>() {
@@ -14,8 +15,9 @@ class QuizResultAdapterDelegate :
         override fun onBind(item: QuizResultItem) {
             with(binding) {
                 tvResultTitle.text = item.name
-                tvResultCount.text = "${item.yourMaxResult}/${item.questionsCount}"
-                progressResult.progress = (item.yourMaxResult.toDouble() / item.questionsCount.toDouble() * 100).toInt()
+                tvResultCount.text = "${item.maxResult}/${item.questionsCount}"
+                progressResult.progress = (item.maxResult.toDouble() / item.questionsCount.toDouble() * 100).toInt()
+                tvTimestamp.text = item.timestamp.format(DateTimeFormatter.ofPattern("d MMM H:mm"))
             }
         }
     }

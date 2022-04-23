@@ -39,14 +39,14 @@ class QuizItemAdapterDelegate :
                     item.questionsCount
                 )
 
-                tvQuizResult.text = if (item.yourMaxResult != 0) {
+                tvQuizResult.text = if (item.maxResult != 0) {
                     ivQuizResult.visibility = View.VISIBLE
                     ImageViewCompat.setImageTintList(
                         ivQuizResult,
                         ColorStateList.valueOf(itemView.context.getColor(R.color.amber_600))
                     )
-                    "Ваш результат: ${item.yourMaxResult}/${item.questionsCount}"
-                    "Ваш результат: ${item.yourMaxResult}/${item.questionsCount}"
+                    "Ваш результат: ${item.maxResult}/${item.questionsCount}"
+                    "Ваш результат: ${item.maxResult}/${item.questionsCount}"
                 } else {
                     ivQuizResult.visibility = View.GONE
                     "Вы еще не проходили этот тест"

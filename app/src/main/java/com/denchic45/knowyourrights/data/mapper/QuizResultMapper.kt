@@ -15,8 +15,9 @@ abstract class QuizResultMapper {
             id = quizWithQuestionAndAnswerEntities.quizResultEntity.id,
             name = quizWithQuestionAndAnswerEntities.quizEntity.name,
             questionsCount = quizWithQuestionAndAnswerEntities.answerAndQuestionEntities.size,
-            yourMaxResult = answerMapper.entityToDomain(quizWithQuestionAndAnswerEntities.answerAndQuestionEntities)
-                .count { it.isCorrectAnswer }
+            maxResult = answerMapper.entityToDomain(quizWithQuestionAndAnswerEntities.answerAndQuestionEntities)
+                .count { it.isCorrectAnswer },
+            timestamp = quizWithQuestionAndAnswerEntities.quizResultEntity.timestamp
         )
     }
 
