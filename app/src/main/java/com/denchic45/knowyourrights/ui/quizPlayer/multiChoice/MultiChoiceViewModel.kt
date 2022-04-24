@@ -13,7 +13,7 @@ class MultiChoiceViewModel @Inject constructor() : BaseViewModel() {
 
     fun onQuestionLoad(question: Question) {
         answers.value =
-            (question.choice as Question.Choice.MultiChoice).answers.map { MultiChoiceItem(it) }
+            (question.choice as Question.Choice.MultiChoice).mixedAnswers.map { MultiChoiceItem(it) }
     }
 
     fun onAnswerItemSelect(position: Int) {

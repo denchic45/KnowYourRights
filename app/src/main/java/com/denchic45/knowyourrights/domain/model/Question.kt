@@ -61,18 +61,30 @@ class Question(
         class SingleChoice(
             val answers: List<String>,
             override val correctAnswer: Answer.SingleAnswer
-        ) : Choice()
+        ) : Choice() {
+            val mixedAnswers = answers.shuffled()
+        }
 
         class MultiChoice(
             val answers: List<String>,
             override val correctAnswer: Answer.MultiAnswer
         ) : Choice() {
 
+            val mixedAnswers = answers.shuffled()
+
             fun getCorrectAndWrongAnswerPositions(selectedMultiAnswer: Answer.MultiAnswer):Pair<Set<Int>,Set<Int>> {
                 return Pair(
                     correctAnswer.value.map { answers.indexOf(it) }.toSet(),
                     selectedMultiAnswer.value.subtract(correctAnswer.value)
                         .map { answers.indexOf(it) }.toSet()
+                )
+            }
+
+            fun getCorrectAndWrongMixAnswerPositions(selectedMultiAnswer: Answer.MultiAnswer):Pair<Set<Int>,Set<Int>> {
+                return Pair(
+                    correctAnswer.value.map { mixedAnswers.indexOf(it) }.toSet(),
+                    selectedMultiAnswer.value.subtract(correctAnswer.value)
+                        .map { mixedAnswers.indexOf(it) }.toSet()
                 )
             }
         }

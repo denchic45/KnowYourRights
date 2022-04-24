@@ -14,7 +14,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -42,6 +41,8 @@ class QuizPlayerViewModel @Inject constructor(
 
     val retryQuiz = MutableSharedFlow<String>()
 
+
+
     sealed class ActualAnswer {
         data class SingleActualAnswer(
             val correctAnswerPosition: Int,
@@ -65,7 +66,7 @@ class QuizPlayerViewModel @Inject constructor(
         viewModelScope.launch {
             selectedAnswer = Question.Answer.SingleAnswer(
                 (currentQuestion.first().choice as Question.Choice.SingleChoice)
-                    .answers[position]
+                    .mixedAnswers[position]
             )
             readyAnswer.emit(true)
         }
@@ -76,7 +77,7 @@ class QuizPlayerViewModel @Inject constructor(
             selectedAnswer = Question.Answer.MultiAnswer(
                 positions.map { position ->
                     (currentQuestion.first().choice as Question.Choice.MultiChoice)
-                        .answers[position]
+                        .mixedAnswers[position]
                 }.toSet()
             )
 
@@ -94,7 +95,7 @@ class QuizPlayerViewModel @Inject constructor(
 
     private val questions = flow {
         emit(findQuestionsByQuizUseCaseUseCase(quizId))
-    }.shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
+    }.map { it.shuffled() }.shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
 
     val currentQuestion =
         combine(questions, currentQuestionPosition) { questions, pos ->
@@ -117,9 +118,9 @@ class QuizPlayerViewModel @Inject constructor(
                     when (choice) {
                         is Question.Choice.SingleChoice -> {
                             ActualAnswer.SingleActualAnswer(
-                                choice.answers.indexOf(choice.correctAnswer.value),
+                                choice.mixedAnswers.indexOf(choice.correctAnswer.value),
                                 if (!choice.tryAnswer(selectedAnswer!!)) {
-                                    choice.answers.indexOf((selectedAnswer as Question.Answer.SingleAnswer).value)
+                                    choice.mixedAnswers.indexOf((selectedAnswer as Question.Answer.SingleAnswer).value)
                                 } else null
                             )
                         }
@@ -127,7 +128,7 @@ class QuizPlayerViewModel @Inject constructor(
                             val selectedMultiAnswer =
                                 this@QuizPlayerViewModel.selectedAnswer as Question.Answer.MultiAnswer
 
-                            choice.getCorrectAndWrongAnswerPositions(selectedMultiAnswer)
+                            choice.getCorrectAndWrongMixAnswerPositions(selectedMultiAnswer)
                                 .run { ActualAnswer.MultiActualAnswer(first, second) }
                         }
                         is Question.Choice.EnterChoice -> {

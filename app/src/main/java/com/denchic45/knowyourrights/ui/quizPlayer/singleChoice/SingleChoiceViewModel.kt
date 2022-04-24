@@ -13,7 +13,7 @@ class SingleChoiceViewModel @Inject constructor() : BaseViewModel() {
 
     fun onQuestionLoad(question: Question) {
         answers.value =
-            (question.choice as Question.Choice.SingleChoice).answers.map { SingleChoiceItem(it) }
+            (question.choice as Question.Choice.SingleChoice).mixedAnswers.map { SingleChoiceItem(it) }
     }
 
     fun onAnswerItemSelect(position: Int) {
