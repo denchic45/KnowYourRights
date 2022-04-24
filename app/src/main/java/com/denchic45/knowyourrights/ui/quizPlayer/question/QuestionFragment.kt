@@ -69,7 +69,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question) {
                         .commit()
                 }
 
-            playerViewModel.dialog.collectWhenStarted(lifecycleScope) { (title, message) ->
+            viewModel.dialog.collectWhenStarted(lifecycleScope) { (title, message) ->
                 MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Rounded)
                     .setTitle(title)
                     .setOnDismissListener { requireActivity().finish() }
